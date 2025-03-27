@@ -1,0 +1,134 @@
+Select ProductName as Name from Products --1
+
+Select * from Customers as Client --2
+
+Select ProductName From Products 
+Union
+Select ProductName From Products_DIscontinued --3
+
+Select ProductName From Products
+Intersect
+Select ProductName From Products_Dicontinued --4
+
+Select ProductName from Products
+UNION ALL
+Select ProductName from Orders --5
+
+Select Distinct CustommerName, Country from Customers --6
+
+Select Price, ProductName
+Case 
+When Price > 100 Then 'High'
+Else 'Low'
+End As PriceCategory from Products --7
+
+Select Country, Department, Count(*) As EmployeeCount
+From employees
+Group by Country, Department --8
+
+Select Category, Count(ProductID) As NumberOfProducts
+From Products
+Group by Category --9
+
+Select ProductName
+	IIF(Stock > 100, 'Yes', 'No') As StockStatus
+From Products --10
+
+Select O.OrderID, C.CustomerName As ClientName
+From Orders O,
+Inner Join Customers C On O.CustomerID = C.CustomerID --11
+
+Select ProductName From Products
+Union
+Select ProductName From OutOfStock --12
+
+Select ProductName From Products
+Except
+Select ProductName From DiscontinuedProducts --13
+
+Select CustomerID,
+	Case
+		When Count(OrderID) > 5 Then 'Eligible'
+		Else 'Not Eligible'
+	End As Eligibility
+From Orders
+Group by CustomerID --14
+
+Select ProductName,
+		IIF(Price > 100, 'Expensive', 'Affordable') AS PriceCategory
+	From Products --15
+
+Select CustomerID, Count(OrderID) As NumberOfOrders 
+from Orders
+Group by CustomerID --16
+
+Select * from Employees
+Where Age < 25 Or Salary > 6000 --17
+
+Select Region, Sum(SalesAmount) As TotalSales
+From Sales 
+Group by Region --18
+
+Select C.CustomerName, O.OrderDate As OrderDateAlias
+From Customer C
+Left Join Orders O On C.CustomerID = O.CustomerID --19
+
+Update Employees
+Set Salary = Salary * 1.1
+Where Department = 'HR' --20
+
+Select ProductID, Sum(SalesAmount) As TotalAmount
+From Sales
+Group by ProductID
+Union All
+Select ProductID, Sum(ReturnAmount) AS TotalAmount
+From Returns
+Group by ProductID --21
+
+Select ProductName From Products 
+Intersect
+Select ProductName From DiscontinuedProducts --22
+
+Select ProductName,
+	Case
+		When TotalSales > 10000 Then 'Top Tier'
+		When TotalSales Between 5000 and 10000 Then 'Mid Tier'
+		Else 'Low Tier'
+	End As SalesTier
+From Products --23
+
+--24
+
+Select CustomerID from Orders
+Except
+Select CustomerID from Invoices--25
+
+Select CustomerID, ProductID, Region, Sum(SalesAmount) As TotalSales
+From Sales
+Group by CUstomerID, ProductID, Region --26
+
+Select ProductID, Quantity,
+	Case
+		When Quantity > 50 Then '15%'
+		When Quamtity Between 20 And 50 Then '10%'
+		Else '5%'
+	End as Discount
+From Orders --27
+
+Select P.ProductName, P.InStock
+From Products P
+Inner Join Products_Discontinued D ON P.ProductID = D.ProductID
+Union
+Select P.ProductName, P.InStock
+From Products P
+Where P.ProductID Not in (Select ProductID From Products_Discontinued --28
+
+SELECT ProductName, 
+       IIF(Stock > 0, 'Available', 'Out of Stock') AS StockStatus
+FROM Products --29
+
+SELECT CustomerID FROM Customers
+EXCEPT
+SELECT CustomerID FROM VIP_Customers --30
+
+
